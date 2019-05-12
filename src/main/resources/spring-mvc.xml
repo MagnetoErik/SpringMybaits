@@ -28,6 +28,15 @@
     <!-- 静态资源可访问的设置方式 -->
     <mvc:default-servlet-handler/>
 
+    <!--登陆过滤器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.magneto.controller.UserFilter"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
     <!-- 配置试图解析器  可以显式设置，也可以不设置，不设置会依据SpringMVC默认设置 -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/"></property>
