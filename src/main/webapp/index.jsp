@@ -1,5 +1,4 @@
 ﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%String path = request.getContextPath();%>
 <html>
 <head>
     <title>用户登录</title>
@@ -49,6 +48,7 @@
         </div>
     </form>
     <hr style="border: 1px solid black; width: 100%"/>
+    <span style="color: red">${msg}</span>
 </div>
 </body>
 </html>

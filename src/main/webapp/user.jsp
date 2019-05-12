@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
-<%String path = request.getContextPath(); %>
 <html>
 
 <head>
@@ -16,7 +15,7 @@
                 var username = $("#username").val();
                 $.ajax({
                     type: "post",
-                    url: "<%=path%>/user?method=selectByUsername",
+                    url: "${pageContext.request.contextPath}/user/selectByUsername.action",
                     data: {username: username},
                     success: (function (str) {
                         if (str == 1) {
@@ -60,7 +59,7 @@
     <h2 class="col-sm-offset-1">用户修改</h2>
     <hr style="border: 1px solid black; width: 100%"/>
     <br/>
-    <form action="/user?method=update" method="post" id="registerForm" class="form-horizontal">
+    <form action="${pageContext.request.contextPath}/user/update.action" method="post" id="registerForm" class="form-horizontal">
         <input type="hidden" id="pageNum" name="pageNum" value="${pageNum}">
         <div style="margin: 0px auto">
             <div class="form-group">

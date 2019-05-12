@@ -18,39 +18,37 @@
     <script type="text/javascript">
         function userDelete(id, pageNum) {
             if(confirm("您确定要删除该用户吗？")) {
-                location.href = "${request.contextPath}/user/delete.action?id=" + id + "&pageNum=" + pageNum;
+                location.href = "${pageContext.request.contextPath}/user/delete.action?id=" + id + "&pageNum=" + pageNum;
             }
         }
 
         function userRegister(id, pageNum) {
-            location.href = "${request.contextPath}/user/userRegisterSelect.action?id=" + id + "&pageNum=" + pageNum;
+            location.href = "${pageContext.request.contextPath}/user/userRegisterSelect.action?id=" + id + "&pageNum=" + pageNum;
         }
 
         function topPage() {
-            location.href = "${request.contextPath}/user/selectAll.action?pageNum=1";
+            location.href = "${pageContext.request.contextPath}/user/selectAll.action?pageNum=1";
 
         }
 
         function lastPage() {
-            location.href = "${request.contextPath}/user/selectAll.action?pageNum=" + ${pageInfo.pageNum - 1};
+            location.href = "${pageContext.request.contextPath}/user/selectAll.action?pageNum=" + ${pageInfo.pageNum - 1};
 
         }
 
         function nextPage() {
-            location.href = "${request.contextPath}/user/selectAll.action?pageNum=" + ${pageInfo.pageNum + 1};
+            location.href = "${pageContext.request.contextPath}/user/selectAll.action?pageNum=" + ${pageInfo.pageNum + 1};
         }
 
         function finalPage() {
-            location.href = "${request.contextPath}/user/selectAll.action?pageNum=" + ${pageInfo.pages + 1};
+            location.href = "${pageContext.request.contextPath}/user/selectAll.action?pageNum=" + ${pageInfo.pages + 1};
         }
 
-        <%--function exit() {--%>
-            <%--if(confirm("您确定要退出吗？")) {--%>
-                <%--<%session.invalidate();%>--%>
-                <%--alert('您已成功退出');--%>
-                <%--window.location.href = "../index.jsp";--%>
-            <%--}--%>
-        <%--}--%>
+        function exit() {
+            if(confirm("您确定要退出吗？")) {
+                window.location.href = "${pageContext.request.contextPath}/user/logout.action";
+            }
+        }
     </script>
 
 </head>
@@ -83,7 +81,7 @@
                         </li>
                         <li role="separator" class="divider"></li>
                         <li>
-                            <a href="#">Separated link</a>
+                            <a href="javascript:void(0)" onclick="exit()">退出系统</a>
                         </li>
                     </ul>
                 </li>
@@ -146,7 +144,6 @@
         <input type="button" class="btn" onclick="finalPage()" value="尾页" />
 
     </div>
-    <input align="right" type="button" class="btn" onclick="exit()" value="安全退出" />
 </div>
 </body>
 
