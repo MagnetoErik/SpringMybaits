@@ -124,8 +124,8 @@ public class UserController {
      * @param response 响应作用域
      * @throws IOException 异常
      */
-    @RequestMapping(value = "/selectByUsername", method = RequestMethod.POST)
-    public void selectByUsername(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @RequestMapping("/checkUsernameRepeat")
+    public void checkUsernameRepeat(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //获取用户名
         String username = request.getParameter("username");
         //根据用户名查询用户是否重复

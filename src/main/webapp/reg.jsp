@@ -14,16 +14,16 @@
                 var username = $("#username").val();
                 $.ajax({
                     type: "post",
-                    url: "${pageContext.request.contextPath}/user/selectByUsername.action",
+                    url: "${pageContext.request.contextPath}/user/checkUsernameRepeat.action",
                     data: {username: username},
                     success: (function (str) {
                         if (str == 1) {
-                            document.getElementById("content").innerHTML="该用户名已存在，请重新输入";
                             result = 0;
+                            document.getElementById("content").innerHTML="该用户名已存在，请重新输入";
                         }
                         else {
-                            document.getElementById("content").innerHTML="恭喜您，可以正常注册";
                             result = 1;
+                            document.getElementById("content").innerHTML="恭喜您，可以正常注册";
                         }
                     })
                 })
