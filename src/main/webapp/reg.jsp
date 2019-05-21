@@ -25,6 +25,7 @@
                             status = 1;
                             document.getElementById("content").innerHTML = "恭喜您，可以正常注册";
                         }
+
                     })
                 })
             })
