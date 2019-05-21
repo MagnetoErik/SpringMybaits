@@ -1,5 +1,6 @@
 package com.magneto.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.magneto.pojo.User;
@@ -9,13 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +56,7 @@ public class UserController {
      * @return 返回视图（selectAll） 查询全部用户信息
      */
     @RequestMapping("/login")
-    public ModelAndView login(String username, String password, HttpSession session,HttpServletRequest request) {
+    public ModelAndView login(String username, String password, HttpSession session, HttpServletRequest request) {
 
         //创建一个user对象，并赋值
         User user = new User();
@@ -75,7 +74,7 @@ public class UserController {
             return new ModelAndView(success);
         } else {
             //登陆失败，返回登陆页面
-            request.setAttribute("msg","用户名或密码错误");
+            request.setAttribute("msg", "用户名或密码错误");
             return new ModelAndView("index");
         }
 
@@ -119,30 +118,23 @@ public class UserController {
 
     /**
      * 注册页面ajax异步请求后台，查询用户名是否重复
-     *
-     * @param request  请求作用域
-     * @param response 响应作用域
-     * @throws IOException 异常
      */
     @RequestMapping("/checkUsernameRepeat")
-    public void checkUsernameRepeat(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //获取用户名
-        String username = request.getParameter("username");
-        //根据用户名查询用户是否重复
-        User user = userService.selectByUsername(username);
-        //获取响应流
-        PrintWriter out = response.getWriter();
-        if (user != null) {
-            //如果不为空，返回true表示数据已经存在，需要重新输入用户名
-            out.print(1);
-        } else {
-            out.print(0);
-        }
+    @ResponseBody
+    public String checkUsernameRepeat(String username) {
 
+        //根据用户名查询用户是否重复
+        int row = userService.selectByUsername(username);
+
+        //将返回的数据转换成json字符串
+        String str = JSON.toJSONString(row);
+
+        //返回json字符串
+        return str;
     }
 
     @RequestMapping("/update")
-    public ModelAndView update(HttpServletRequest request){
+    public ModelAndView update(HttpServletRequest request) {
 
         int pageNum = Integer.parseInt(request.getParameter("pageNum"));
         int userId = Integer.parseInt(request.getParameter("userId"));
@@ -153,10 +145,10 @@ public class UserController {
         User user = new User(userId, username, password);
         int result = userService.update(user);
 
-        if(result>0){
+        if (result > 0) {
             String success = "forward:/user/selectAll.action?pageNum=" + pageNum;
             return new ModelAndView(success);
-        }else{
+        } else {
             String fail = "Redirect:/user/selectAll.action?pageNum=" + pageNum;
             return new ModelAndView(fail);
         }
@@ -165,6 +157,7 @@ public class UserController {
 
     /**
      * 用户信息删除方法
+     *
      * @param request 请求作用域
      * @return 返回到查询全部用户方法，将删除后的数据显示到页面
      */
@@ -192,12 +185,13 @@ public class UserController {
 
     /**
      * 修改前先将该用户的全部信息返回到user.jsp
-     * @param model 模型
-     * @param request   请求作用域
+     *
+     * @param model   模型
+     * @param request 请求作用域
      * @return 返回到指定的页面
      */
     @RequestMapping("/userRegisterSelect")
-    public String userRegisterSelect(Model model,HttpServletRequest request){
+    public String userRegisterSelect(Model model, HttpServletRequest request) {
         //获取用户信息id
         int id = Integer.parseInt(request.getParameter("id"));
         //获取当前页码
@@ -206,9 +200,9 @@ public class UserController {
         User user = userService.userRegisterSelect(id);
 
         //创建一个map集合，用户存放需要转发的数据
-        Map<String,Object> map = new HashMap<>();
-        map.put("user",user);
-        map.put("pageNum",pageNum);
+        Map<String, Object> map = new HashMap<>();
+        map.put("user", user);
+        map.put("pageNum", pageNum);
         //将map存入model中
         model.addAllAttributes(map);
 
@@ -218,7 +212,7 @@ public class UserController {
 
 
     @RequestMapping("/logout")
-    public String logout(HttpSession session){
+    public String logout(HttpSession session) {
         session.invalidate();
         return "index";
     }

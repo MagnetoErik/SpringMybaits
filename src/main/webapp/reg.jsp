@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css"/>
     <script type="text/javascript">
         $(document).ready(function () {
-            var result = 0;
+            var status = 0;
             $("#username").blur(function () {
                 var username = $("#username").val();
                 $.ajax({
@@ -18,12 +18,12 @@
                     data: {username: username},
                     success: (function (str) {
                         if (str == 1) {
-                            result = 0;
-                            document.getElementById("content").innerHTML="该用户名已存在，请重新输入";
+                            status = 0;
+                            document.getElementById("content").innerHTML = "该用户名已存在，请重新输入";
                         }
                         else {
-                            result = 1;
-                            document.getElementById("content").innerHTML="恭喜您，可以正常注册";
+                            status = 1;
+                            document.getElementById("content").innerHTML = "恭喜您，可以正常注册";
                         }
                     })
                 })
@@ -41,7 +41,7 @@
                     alert('请输入密码!');
                     return;
                 }
-                if (result == 1) {
+                if (status == 1) {
                     $("#regForm").submit();
                 }
                 else {
@@ -59,7 +59,8 @@
     <h2 class="col-sm-offset-1">用户注册</h2>
     <hr style="border: 1px solid black; width: 100%"/>
     <br/>
-    <form action="${pageContext.request.contextPath}/user/reg.action" method="post" id="regForm" class="form-horizontal">
+    <form action="${pageContext.request.contextPath}/user/reg.action" method="post" id="regForm"
+          class="form-horizontal">
 
         <div class="form-group">
             <label class="col-sm-2 control-label">用户名:</label>

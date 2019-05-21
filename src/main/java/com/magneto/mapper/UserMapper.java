@@ -35,7 +35,7 @@ public interface UserMapper {
      * @param username 用户名
      * @return 如果用户名不存在返回null 否侧返回查询到的用户
      */
-    User selectByUsername(String username);
+    int selectByUsername(String username);
 
     /**
      * 编辑用户

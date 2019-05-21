@@ -23,7 +23,13 @@ public class UserFilter implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String url = request.getRequestURI();
+        if (url.indexOf("/reg.action") >= 0) {
+            return true;
+        }
         if (url.indexOf("/login.action") >= 0) {
+            return true;
+        }
+        if(url.indexOf("/checkUsernameRepeat.action") >= 0){
             return true;
         }
         HttpSession session = request.getSession();
@@ -33,7 +39,7 @@ public class UserFilter implements HandlerInterceptor {
         }
 
         request.setAttribute("msg","当前用户还未登陆，请先登陆！");
-        request.getRequestDispatcher("index.jsp").forward(request,response);
+        request.getRequestDispatcher("../index.jsp").forward(request,response);
 
         return false;
     }
