@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
 <%
-    SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+    SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
     String date = format.format(new Date());
 %>
 <html>
@@ -58,7 +58,8 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav col-md-4">
-                <li class="navbar-text">今天是<%=date%></li>
+                <li class="navbar-text">今天是<%=date%>
+                </li>
 
             </ul>
 
@@ -75,7 +76,7 @@
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">${user.username} <span class="caret"></span></a>
+                       aria-expanded="false">欢迎${user.username} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="#">用户信息</a>
@@ -96,14 +97,29 @@
         <a href="#">用户列表</a>
     </li>
     <li>
-        <a href="#">教师管理</a>
+        <a href="#">课程编排</a>
     </li>
     <li>
         <a href="#">学生管理</a>
     </li>
 </ul>
 
+
 <div class="col-md-10">
+    <div class="form-inline" style="float: right;">
+        <div class="form-group">
+            <label>查询条件：</label>
+            <select class="form-control">
+                <option>1</option>
+                <option>1</option>
+                <option>1</option>
+            </select>
+            <label>关键字：</label>
+            <input type="text" class="form-control">
+        </div>
+        <input type="button" class="btn btn-default" value="查询">
+        <input type="button" class="btn btn-default" value="添加">
+    </div>
     <table align="center" class="table">
         <tr>
             <td align="center">编号</td>
@@ -137,6 +153,9 @@
 
     </div>
 </div>
+<footer>
+    <span>版权所有：Magneto</span>
+</footer>
 </body>
 
 </html>

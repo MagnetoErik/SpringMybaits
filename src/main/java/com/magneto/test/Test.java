@@ -9,8 +9,10 @@ public class Test {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         UserService userService = applicationContext.getBean("userService", UserService.class);
 
-        int result = userService.selectByUsername("aa");
 
-        System.out.println(result);
+        for(int i =0;i<100;i++){
+            userService.reg("aa"+i,"aa"+i);
+        }
+
     }
 }

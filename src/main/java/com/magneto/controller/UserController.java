@@ -99,7 +99,7 @@ public class UserController {
 
 
         //分页插件
-        PageHelper.startPage(pageNum, 6);
+        PageHelper.startPage(pageNum, 14);
         //查询全部用户信息 每页显示6条记录
         List<User> userList = userService.selectAll();
         //获取List的全部分页信息
