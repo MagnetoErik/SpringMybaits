@@ -1,6 +1,7 @@
 package com.magneto.mapper;
 
 import com.magneto.pojo.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -43,9 +44,10 @@ public interface UserMapper {
      * @param user 用户信息（username：用户名、password：密码）
      * @return 返回受影响的行数
      */
-    int update(User user);
+    int doUpdate(User user);
 
     /**
+     /**
      * 删除用户
      *
      * @param id 用户id
@@ -59,5 +61,10 @@ public interface UserMapper {
      * @param id
      * @return
      */
-    User userRegisterSelect(int id);
+    User toUpdate(int id);
+
+    int doAddUser(User user);
+
+    List<User> selectByKey(@Param("key") String key, @Param("value") String value);
+
 }

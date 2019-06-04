@@ -50,6 +50,11 @@
             }
         }
     </script>
+    <style>
+        tr>td{
+            align : center;
+        }
+    </style>
 
 </head>
 
@@ -105,45 +110,48 @@
 </ul>
 
 
-<div class="col-md-10">
-    <div class="form-inline" style="float: right;">
+<div class="col-md-10" id="main">
+    <div class="form-inline" style="float: right">
         <div class="form-group">
-            <label>查询条件：</label>
-            <select class="form-control">
-                <option>1</option>
-                <option>1</option>
-                <option>1</option>
+            <label>查找条件：</label>
+            <select class="form-control" v-model="key">
+                <option value="id">id</option>
+                <option value="username">username</option>
+                <option value="password">password</option>
             </select>
-            <label>关键字：</label>
-            <input type="text" class="form-control">
         </div>
-        <input type="button" class="btn btn-default" value="查询">
-        <input type="button" class="btn btn-default" value="添加">
+        <div class="form-group">
+            <label>关键字</label>：
+            <input class="form-control" v-model="value">
+        </div>
+
+        <input class="btn btn-default" id="select" name="select" value="查询" v-on:click="submitForm()"/>
+        <input class="btn btn-default" value="添加" onclick="add()"/>
     </div>
-    <table align="center" class="table">
+    <table align="center" class="table" id="content">
         <tr>
-            <td align="center">编号</td>
-            <td align="center">用户名</td>
-            <td align="center">密码</td>
-            <td align="center">操作</td>
+            <td>编号</td>
+            <td>用户名</td>
+            <td>密码</td>
+            <td>操作</td>
         </tr>
-        <c:forEach items="${userList}" var="users">
-            <tr>
-                <td align="center">
-                        ${users.id}
-                </td>
-                <td align="center">
-                        ${users.username}
-                </td>
-                <td align="center">
-                        ${users.password}
-                </td>
-                <td align="center">
-                    <a href="javascript:void(0);" onclick="userRegister(${users.id},${pageInfo.pageNum})">编辑</a>
-                    <a href="javascript:void(0);" onclick="userDelete(${users.id},${pageInfo.pageNum})">删除</a>
-                </td>
-            </tr>
-        </c:forEach>
+        <tbody>
+        <tr v-for="(user,index) in userList">
+            <td>
+                {{user.id}}<%--我用了热部署--%>
+            </td>
+            <td>
+                {{user.username}}
+            </td>
+            <td>
+                {{user.username}}
+            </td>
+            <td align="center">
+                <a href="javascript:void(0);" onclick="editUser(${users.id})">编辑</a>
+                <a href="javascript:void(0);" onclick="deleteUser(${users.id})">删除</a>
+            </td>
+        </tr>
+        </tbody>
     </table>
     <div align="center">
         <input type="button" class="btn" onclick="topPage()" value="首页"/>
@@ -159,3 +167,42 @@
 </body>
 
 </html>
+<script>
+    var vm = new Vue({
+        el: '#container',
+        data: {
+            id:'',
+            key: '',
+            value: '',
+            userList: [],
+        },
+        methods: {
+            submitForm: function (event) {
+                $.ajax({
+                    type: "post",
+                    url: "/user/selectByKey.action",
+                    data: {
+                        key: this.key,
+                        value: this.value
+                    },
+                    success: function (res) {
+                        vm.userList = JSON.parse(res);
+                    }
+                });
+            },
+            editUser:function (event) {
+                location.href = "${pageContext.request.contextPath}/user/toUpdate.action?id=" + this.id;
+            }
+        },
+
+        created() {
+            $.ajax({
+                type: "post",
+                url: "/user/selectAll.action",
+                success: function (res) {
+                    vm.userList = JSON.parse(res);
+                }
+            });
+        }
+    });
+</script>

@@ -39,13 +39,24 @@ public interface UserService {
      */
     int selectByUsername(String username);
 
+
+
+    /**
+     * 用户点击修改按钮后，执行查询，将用户的所有信息转发到新的user.jsp页面
+     *
+     * @param id 用户信息id
+     * @return 用户信息
+     */
+    User toUpdate(int id);
+
+
     /**
      * 编辑用户
      *
      * @param user 用户信息（username：用户名、password：密码）
      * @return 返回受影响的行数
      */
-    int update(User user);
+    int doUpdate(User user);
 
     /**
      * 删除用户
@@ -56,10 +67,18 @@ public interface UserService {
     int delete(int id);
 
     /**
-     * 用户点击修改按钮后，执行查询，将用户的所有信息转发到新的user.jsp页面
-     *
-     * @param id 用户信息id
-     * @return 用户信息
+     * 添加用户信息
+     * @param user
+     * @return
      */
-    User userRegisterSelect(int id);
+    int doAddUser(User user);
+
+
+    /**
+     * 根据指定的条件查询信息
+     * @param key  所指定的条件（id  username  password）
+     * @param value  关键字
+     * @return 返回查询到的李列表
+     */
+    List<User> selectByKey(String key,String value);
 }

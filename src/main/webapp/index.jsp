@@ -18,7 +18,20 @@
                     alert('请输入密码!');
                     return;
                 }
-                $("#loginForm").submit();
+                $.ajax({
+                    type:"post",
+                    url:"/user/login.action",
+                    data:{username:username,password:password},
+                    success:function (str) {
+                        if(str == "success"){
+                            window.location.href="jsp/userList.jsp";
+                        }
+                        else{
+                            alert('用户名或密码错误');
+                            window.location.href="index.jsp"
+                        }
+                    }
+                })
 
             })
         });

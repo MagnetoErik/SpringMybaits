@@ -17,21 +17,25 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+
     @Override
-    public int reg(String username,String password){
+    public int reg(String username, String password) {
         int result = userMapper.reg(new User(1, username, password));
         return result;
     }
+
 
     @Override
     public int login(User user) {
         return userMapper.login(user);
     }
 
+
     @Override
-    public List<User> selectAll(){
+    public List<User> selectAll() {
         return userMapper.selectAll();
     }
+
 
     @Override
     public int selectByUsername(String username) {
@@ -40,10 +44,16 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    public User toUpdate(int id) {
+        return userMapper.toUpdate(id);
+    }
+
+
+    @Override
     // propagation 默认传播行为 isolation 默认隔离级别 readonly 事务只读
-    @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,readOnly = false)
-    public int update(User user) {
-        return userMapper.update(user);
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, readOnly = false)
+    public int doUpdate(User user) {
+        return userMapper.doUpdate(user);
     }
 
 
@@ -52,9 +62,15 @@ public class UserServiceImpl implements UserService {
         return userMapper.delete(id);
     }
 
+
     @Override
-    public User userRegisterSelect(int id) {
-        return userMapper.userRegisterSelect(id);
+    public int doAddUser(User user) {
+        return userMapper.doAddUser(user);
     }
 
+
+    @Override
+    public List<User> selectByKey(String key, String value) {
+        return userMapper.selectByKey(key, value);
+    }
 }
